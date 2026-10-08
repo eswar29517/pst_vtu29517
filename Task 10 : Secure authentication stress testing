@@ -1,0 +1,60 @@
+import java.util.Scanner;
+
+public class SecureAuthenticationStressTest {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String validUsername = "admin";
+        String validPassword = "Admin@123";
+
+        int failedAttempts = 0;
+        int successfulAttempts = 0;
+        int rejectedAttempts = 0;
+
+        System.out.print("Enter number of login attempts: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 1; i <= n; i++) {
+
+            System.out.println("\nAttempt " + i);
+
+            if (failedAttempts >= 3) {
+                System.out.println("Authentication blocked due to excessive failed attempts.");
+                rejectedAttempts++;
+                continue;
+            }
+
+            System.out.print("Enter username: ");
+            String username = sc.nextLine();
+
+            System.out.print("Enter password: ");
+            String password = sc.nextLine();
+
+            if (username.equals(validUsername)
+                    && password.equals(validPassword)) {
+
+                System.out.println("Login Successful");
+                successfulAttempts++;
+                failedAttempts = 0;
+
+            } else {
+                System.out.println("Login Failed - Invalid credentials");
+                failedAttempts++;
+                rejectedAttempts++;
+
+                if (failedAttempts == 3) {
+                    System.out.println("Security Alert: Account temporarily locked.");
+                }
+            }
+        }
+
+        System.out.println("\n----- Stress Test Result -----");
+        System.out.println("Total Attempts      : " + n);
+        System.out.println("Successful Attempts : " + successfulAttempts);
+        System.out.println("Rejected Attempts   : " + rejectedAttempts);
+
+        sc.close();
+    }
+}
