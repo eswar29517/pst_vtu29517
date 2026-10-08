@@ -1,0 +1,34 @@
+import java.util.*;
+
+class CalculatorTest {
+
+    static int add(int a, int b) {
+        return a + b;
+    }
+
+    static double divide(int a, int b) {
+        return (double) a / b;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int a = sc.nextInt();
+        String op = sc.next();
+        int b = sc.nextInt();
+
+        boolean passed = false;
+
+        if (op.equals("+")) {
+            passed = add(a, b) == a + b;
+        } 
+        else if (op.equals("/") && b != 0) {
+            passed = divide(a, b) == (double) a / b;
+        }
+        // division by zero handled as invalid -> Test failed
+
+        System.out.println(passed ? "Test passed" : "Test failed");
+        
+        sc.close();
+    }
+}
