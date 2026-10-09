@@ -1,0 +1,41 @@
+
+import java.util.*;
+
+class Result {
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+        int current = arr.get(0);
+        int maxSub = current;
+        int maxElement = current;
+        int maxSeq = 0;
+
+        for (int x : arr) {
+            current = Math.max(x, current + x);
+            maxSub = Math.max(maxSub, current);
+            maxElement = Math.max(maxElement, x);
+            if (x > 0) maxSeq += x;
+        }
+
+        if (maxSeq == 0) maxSeq = maxElement;
+
+        return Arrays.asList(maxSub, maxSeq);
+    }
+}
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            List<Integer> arr = new ArrayList<>();
+
+            for (int i = 0; i < n; i++)
+                arr.add(sc.nextInt());
+
+            List<Integer> ans = Result.maxSubarray(arr);
+            System.out.println(ans.get(0) + " " + ans.get(1));
+        }
+        sc.close();
+    }
+}
